@@ -21,10 +21,6 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import random
 
-def generate_transaction_hash():
-    ms = time.time()
-    return get_hash(str(ms), simple_hash=False)
-
 def generate_users(user_number, init_budget=10**6):
     """
     This function create users with initial budget 
@@ -189,10 +185,10 @@ def measure_transaction_time(block_size, cnt):
 time_ = dict()
 user_number = 100
 amount = 10000
-n_iter = 2 ** 10
+n_iter = 100
     
 BLOCK_SIZES = [2 ** (i + 1) for i in range(4)]
-experiment_frequency = 10
+experiment_frequency = 2
 
 for block_size in BLOCK_SIZES:
     print('block_size', block_size)
