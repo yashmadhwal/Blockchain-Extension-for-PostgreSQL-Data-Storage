@@ -135,9 +135,6 @@ def update(transactions):
 
 args = {
     'DB_NAME': "blockchain_postgresql", 
-    #'DB_USER': "darkhannurlybay",
-    #'DB_PASSWORD': "",
-    #'DB_HOST': "localhost",
     'DB_PORT': "5432",
     'verbose': False
 }
