@@ -37,15 +37,13 @@ def generate_users(user_number, init_budget=10**6):
         #user = get_hash(str(i), simple_hash=False)
         user = hashlib.sha224(bytes(i)).hexdigest()
         users += [user]
-        #tx_hash = generate_transaction_hash()
-        #tx = user + str(init_budget)
         tx_hash = hashlib.sha224((user + str(init_budget)).encode('utf-8')).hexdigest()
         transaction += [('create', user, init_budget, tx_hash)]
         
     return users, transaction
 
 
-def generate_transaction(users, max_spend=100):
+def generate_transaction(users, max_amount):
     """
     This function create spend one transaction 
     for given users with selected randomly.
@@ -53,17 +51,11 @@ def generate_transaction(users, max_spend=100):
     transaction = None
     
     # Random spends among users
-    tx_hash = generate_transaction_hash()
     idx1 = random.choice(list(users))
     idx2 = random.choice(list(i for i in users if i not in idx1))
-    #idx1 =  random.choice(list(users))
-    #print(idx1)
-    #idx2 = np.random.choice(range(len(users)), size=2, replace=False)
-    #print(idx2)
-    amount = np.random.randint(low=1, high=max_spend)
-    #transaction = ('spend', users[idx1], users[idx2], amount, tx_hash)
+    amount = np.random.randint(low=1, high=max_amount)
+    tx_hash = hashlib.sha224((idx1+idx2+str(amount)).encode('utf-8')).hexdigest()
     transaction = ('spend', idx1, idx2, amount, tx_hash)
-    #print(transaction)
     
     return transaction
 
@@ -87,6 +79,7 @@ def update(transactions):
                 txhash=tx[3], _type='create', user1=tx[1],
                 amount=tx[2], blockid=block_id, position=position + 1
             )
+            
         if tx[0] == 'spend':
             # Update Patricia tree
             patricai_trie.spend(tx[1], tx[2], tx[3], tx[4])
@@ -194,10 +187,9 @@ def measure_transaction_time(block_size, cnt):
 
    
 time_ = dict()
-user_number = 20
-max_spend = 100
-#n_iter = 2 ** 6
-n_iter = 30
+user_number = 100
+amount = 10000
+n_iter = 2 ** 10
     
 BLOCK_SIZES = [2 ** (i + 1) for i in range(4)]
 experiment_frequency = 10
@@ -246,7 +238,7 @@ for block_size in BLOCK_SIZES:
 
     for i in tqdm(range(n_iter)):
 
-        tx = generate_transaction(users, max_spend=max_spend)
+        tx = generate_transaction(users, amount)
         tx_block.append(tx)
 
         if (i + 1) % block_size == 0:
@@ -342,7 +334,7 @@ plt.ylabel('Time(s)');
 
 
 
-
+#balance
 fig, axes = plt.subplots(nrows=2, ncols=3, sharex=False, figsize=(20, 10))
 
 for k in range(len(BLOCK_SIZES)):
