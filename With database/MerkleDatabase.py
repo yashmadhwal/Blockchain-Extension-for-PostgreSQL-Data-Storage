@@ -1,15 +1,19 @@
 import psycopg2
 
 class MerkleDatabase():
-    def __init__(self, DB_NAME="stxxaqoh", DB_USER="stxxaqoh", 
-                 DB_PASSWORD="T94ybwpTs9z3mbqF0nQ02mFFeFPDlQhj", 
-                 DB_HOST="drona.db.elephantsql.com",
+    def __init__(self, DB_NAME="blockchain_postgresql", 
+                 #DB_USER="yashmadhwal", 
+                 #DB_PASSWORD="", 
+                 #DB_HOST="localhost",
                  DB_PORT="5432",
                  verbose=False):
         try:
             self.conn = psycopg2.connect(
-                dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, 
-                host=DB_HOST, port=DB_PORT
+                dbname=DB_NAME, 
+                #user=DB_USER, 
+                #password=DB_PASSWORD, 
+                #host=DB_HOST, 
+                port=DB_PORT
             )
             self.cur = self.conn.cursor()
             self.verbose = verbose

@@ -1,9 +1,10 @@
 import psycopg2
 
 class PatriciaDatabase():
-    def __init__(self, DB_NAME="stxxaqoh", DB_USER="stxxaqoh",
-                 DB_PASSWORD="T94ybwpTs9z3mbqF0nQ02mFFeFPDlQhj",
-                 DB_HOST="drona.db.elephantsql.com",
+    def __init__(self, DB_NAME="blockchain_postgresql",
+                 #DB_USER="stxxaqoh",
+                 #DB_PASSWORD="T94ybwpTs9z3mbqF0nQ02mFFeFPDlQhj",
+                 #DB_HOST="drona.db.elephantsql.com",
                  DB_PORT="5432",
                  verbose=False):
         '''Interface to connecting, manipulating with database for 
@@ -17,8 +18,10 @@ class PatriciaDatabase():
                     d. leaf - leaf of patricia tree
         '''
         try:
-            self.conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER,
-                                         password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
+            self.conn = psycopg2.connect(dbname=DB_NAME,
+                                         #user=DB_USER,
+                                         #password=DB_PASSWORD, host=DB_HOST, 
+                                         port=DB_PORT)
             self.cur = self.conn.cursor()
             self.verbose = verbose
             if self.verbose: print("successfully connected to server!")

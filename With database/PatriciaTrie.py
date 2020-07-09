@@ -5,7 +5,7 @@ class PatriciaTrie:
     def __init__(self, db, simple_hash=True):
         self.db = db
         self.simple_hash = simple_hash
-        self.cnt = self.db.get_cnt()  # count of nodes
+        self.cnt = self.db.get_cnt() #count of nodes
     
     def get_balance(self, user:str):
         """
@@ -13,6 +13,7 @@ class PatriciaTrie:
         """
         # Find user in MPT
         idx = self.dfs_simple(0, user)
+        
         balance = self.db.get_cell(
             table_name='PatriciaNode', 
             field='balance',
@@ -20,12 +21,16 @@ class PatriciaTrie:
             idx=idx,
         )
         return balance
-        
+    
     def dfs_simple(self, idx, prefix):
         """
         Helper recursive get_balance
         """
-        if prefix == '': return idx
+        '''
+        Commit: index of given prefix(user), find index of a given prefix.
+        here prefix = user_key (eg hash of Alice)
+        '''
+        if prefix == '': return idx 
         branch = self.db.get_branch(idx, prefix)
         k = self.common_prefix_len(branch[3], prefix)
         return self.dfs_simple(branch[2], prefix[k:])
