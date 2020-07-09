@@ -283,8 +283,7 @@ for block_size in BLOCK_SIZES:
     db_mekrle.close_session()
     db_patricia.close_session()
    
-    
-'''
+
 #____Ploting____
 def convert_to_numpy(dictionary):
     for key in dictionary:
@@ -319,7 +318,7 @@ for i in range(3):
     axes[i].set_ylabel('table size (bytes)')
 plt.show()
 
-
+'''
 # plt.title('Размер таблицы для \nхранения данных. Размер блока 32',)
 plt.plot(TIME[16]['x_axis'], TIME[16]['memory_usage']['merkle'], '-')
 plt.plot(TIME[16]['x_axis'], TIME[16]['memory_usage']['patricia'], '-')
@@ -327,7 +326,7 @@ plt.plot(TIME[16]['x_axis'], TIME[16]['memory_usage']['usual'], '-')
 plt.legend(['merkle', 'patricia', 'usual'])
 plt.xlabel('No oF Tx')
 plt.ylabel('Size of Table');
-
+'''
 
 
 legend = []
@@ -420,4 +419,3 @@ for k in range(len(BLOCK_SIZES)):
     plt.plot(x, np.exp(np.array(y_usual)), '-o')
     plt.plot(x, np.exp(np.array(y_special)), '-o')
     plt.legend(['usual', 'patricia']);
-'''
